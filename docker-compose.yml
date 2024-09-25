@@ -8,12 +8,23 @@ services:
       PGDATA: /var/lib/postgresql/data
       POSTGRES_DB: book_social_network
     volumes:
-      - postgres:/data/postgres
+      - postgres:/var/lib/postgresql/data
     ports:
       - 5432:5432
     networks:
       - book-social-network
     restart: unless-stopped
+  pgadmin4:
+    image: elestio/pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: rgaieghoussem12@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_LISTEN_PORT: 8085
+    ports:
+      - '127.0.0.1:8085:8085'
+    networks:
+      - book-social-network
   mail-dev:
     container_name: mail-dev-bsn
     image: maildev/maildev

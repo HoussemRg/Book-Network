@@ -23,14 +23,14 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @EntityListeners(AuditingEntityListener.class)
 public class User implements UserDetails, Principal {
 
     @Id
     @GeneratedValue
     private Integer id;
-    private String firstName;
+    private String firstname;
     private String lastname;
     private LocalDate dateOfBirth;
     @Column(unique = true)
@@ -92,7 +92,7 @@ public class User implements UserDetails, Principal {
         return enabled;
     }
 
-    private String fullName(){
-        return firstName + " " + lastname;
+    public String fullName(){
+        return firstname + " " + lastname;
     }
 }
