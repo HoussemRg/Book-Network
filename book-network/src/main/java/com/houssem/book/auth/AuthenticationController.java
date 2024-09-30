@@ -19,11 +19,24 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    private ResponseEntity<?> register(
+    public ResponseEntity<?> register(
             @RequestBody @Valid RegistrationRequest registrationRequest
     ) throws MessagingException {
         authService.register(registrationRequest);
         return ResponseEntity.accepted().build();
+    }
+
+
+    @PostMapping("/authenticate")
+    public ResponseEntity<AuthenticationResponse> authenticate(
+            @RequestBody @Valid AuthenticationRequest authenticationRequest
+    ){
+        return ResponseEntity.ok(authService.authenticate(authenticationRequest));
+    }
+
+    @GetMapping("/activate-account")
+    public void activateAccount(@RequestParam String token) throws MessagingException {
+        authService.activateAccount(token);
     }
 
 }

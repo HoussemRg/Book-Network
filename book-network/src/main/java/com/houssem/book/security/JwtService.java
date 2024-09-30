@@ -3,6 +3,7 @@ package com.houssem.book.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,7 +47,7 @@ public class JwtService {
                 .getBody();
     }
 
-    private String generateToken(Map<String, Object> claims,UserDetails userDetails){
+    public String generateToken(Map<String, Object> claims,UserDetails userDetails){
         return buildToken(claims,userDetails,jwtExpiration);
     }
 
@@ -62,7 +63,7 @@ public class JwtService {
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis()+ jwtExpiration) )
                 .claim("authorities",authorities)
-                .signWith(getSignInKey())
+                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -81,7 +82,6 @@ public class JwtService {
 
 
     private Key getSignInKey() {
-        byte[] keyBytes= Decoders.BASE64.decode(secretKey);
-        return Keys.hmacShaKeyFor(keyBytes);
+        return Keys.secretKeyFor(SignatureAlgorithm.HS256);
     }
 }
