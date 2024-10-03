@@ -41,4 +41,16 @@ public class Book extends BaseCommon {
 
     @OneToMany(mappedBy = "book")
     private List<BookTransactionHistory> histories;
+
+    @Transient
+    public double getRate(){
+        if(feedBacks.isEmpty() | feedBacks==null){
+            return 0.0;
+        }
+        var rate= this.feedBacks.stream()
+                .mapToDouble(FeedBack::getNote)
+                .average()
+                .orElse(0.0);
+        return Math.round(rate*10.0)/10.0;
+    }
 }
