@@ -1,6 +1,9 @@
 package com.houssem.book.book;
 
 import com.houssem.book.common.PageResponse;
+import com.houssem.book.exception.OperationNotPermitted;
+import com.houssem.book.history.BookTransactionHistory;
+import com.houssem.book.history.BookTransactionHistoryRepository;
 import com.houssem.book.user.User;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 import static com.houssem.book.book.BookSpecification.*;
 
@@ -21,6 +25,7 @@ import static com.houssem.book.book.BookSpecification.*;
 @RequiredArgsConstructor
 public class BookService {
     private final BookRepository bookRepository;
+    private final BookTransactionHistoryRepository bookTransactionHistoryRepository;
     private final BookMapper bookMapper;
 
     public Integer save(BookRequest bookRequest, Authentication connectedUser) {
@@ -66,5 +71,49 @@ public class BookService {
                 books.isFirst(),
                 books.isLast()
         );
+    }
+
+    public PageResponse<BorrowedBookResponse> findBorrowedBooks(int page, int size, Authentication userConnected) {
+        User user=((User) userConnected.getPrincipal());
+        Pageable pageable= PageRequest.of(page,size, Sort.by("createdAt").descending());
+        Page<BookTransactionHistory> allBorrowedBooks=bookTransactionHistoryRepository.findAllBorrowedBooks(pageable,user.getId());
+        List<BorrowedBookResponse> borrowedBookResponse=allBorrowedBooks.stream().map(bookMapper::toBorrowedBookResponse).toList();
+
+        return new PageResponse<>(
+                borrowedBookResponse,
+                allBorrowedBooks.getNumber(),
+                allBorrowedBooks.getSize(),
+                allBorrowedBooks.getTotalElements(),
+                allBorrowedBooks.getTotalPages(),
+                allBorrowedBooks.isFirst(),
+                allBorrowedBooks.isLast()
+        );
+    }
+
+    public PageResponse<BorrowedBookResponse> findReturnedBooks(int page, int size, Authentication userConnected) {
+        User user=((User) userConnected.getPrincipal());
+        Pageable pageable= PageRequest.of(page,size, Sort.by("createdAt").descending());
+        Page<BookTransactionHistory> allBorrowedBooks=bookTransactionHistoryRepository.findAllReturnedBooks(pageable,user.getId());
+        List<BorrowedBookResponse> borrowedBookResponse=allBorrowedBooks.stream().map(bookMapper::toBorrowedBookResponse).toList();
+
+        return new PageResponse<>(
+                borrowedBookResponse,
+                allBorrowedBooks.getNumber(),
+                allBorrowedBooks.getSize(),
+                allBorrowedBooks.getTotalElements(),
+                allBorrowedBooks.getTotalPages(),
+                allBorrowedBooks.isFirst(),
+                allBorrowedBooks.isLast()
+        );
+    }
+
+    public Integer updateShareableStatus(Integer bookId, Authentication userConnected) {
+        Book book=bookRepository.findById(bookId).orElseThrow(()-> new EntityNotFoundException("No book found with ID::"+bookId));
+        User user=((User) userConnected.getPrincipal());
+        if(Objects.equals(book.getOwner().getId(),user.getId()))
+            throw new OperationNotPermitted("you cannot update books shareable status ");
+        book.setShareable(!book.isShareable());
+        bookRepository.save(book);
+        return book.getId();
     }
 }

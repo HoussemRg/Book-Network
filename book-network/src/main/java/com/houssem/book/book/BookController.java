@@ -47,4 +47,31 @@ public class BookController {
     ){
         return ResponseEntity.ok(bookService.findAllBooksByOwner(page,size,userConnected));
     }
+
+    @GetMapping("/borrowed")
+    public ResponseEntity<PageResponse<BorrowedBookResponse>> findBorrowedBooks(
+            @RequestParam(name = "Page", defaultValue = "0",required = false) int page,
+            @RequestParam(name = "Size",defaultValue = "10",required = false) int size,
+            Authentication userConnected
+    ){
+        return ResponseEntity.ok(bookService.findBorrowedBooks(page,size,userConnected));
+    }
+
+    @GetMapping("/returned")
+    public ResponseEntity<PageResponse<BorrowedBookResponse>> findReturnedBooks(
+            @RequestParam(name = "Page", defaultValue = "0",required = false) int page,
+            @RequestParam(name = "Size",defaultValue = "10",required = false) int size,
+            Authentication userConnected
+    ){
+        return ResponseEntity.ok(bookService.findReturnedBooks(page,size,userConnected));
+    }
+
+    @PatchMapping("/shareable/{book-id}")
+    public ResponseEntity<Integer> updateShareableStatus(
+            @PathVariable ("book-id") Integer bookId,
+            Authentication userConnected
+    ){
+        return ResponseEntity.ok(bookService.updateShareableStatus(bookId,userConnected));
+    }
+
 }

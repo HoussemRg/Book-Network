@@ -1,6 +1,7 @@
 package com.houssem.book.book;
 
 
+import com.houssem.book.history.BookTransactionHistory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,18 @@ public class BookMapper {
                 .shareable(book.isShareable())
                 .owner(book.getOwner().fullName())
                 //cover
+                .build();
+    }
+
+    public BorrowedBookResponse toBorrowedBookResponse(BookTransactionHistory history) {
+        return BorrowedBookResponse.builder()
+                .id(history.getId())
+                .title(history.getBook().getTitle())
+                .authorName(history.getBook().getAuthorName())
+                .isbn(history.getBook().getIsbn())
+                .rate(history.getBook().getRate())
+                .returned(history.isReturned())
+                .returnApproved(history.isReturnApproved())
                 .build();
     }
 }

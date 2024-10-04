@@ -1,6 +1,7 @@
 package com.houssem.book.handler;
 
 
+import com.houssem.book.exception.OperationNotPermitted;
 import jakarta.mail.MessagingException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -69,7 +70,17 @@ public class GlobalExceptionHandler {
                 .body(
                         ExceptionResponse.builder()
                                 .error(exp.getMessage())
+                                .build()
+                );
+    }
 
+    @ExceptionHandler(OperationNotPermitted.class)
+    public ResponseEntity<ExceptionResponse> handleException(OperationNotPermitted exp){
+        return ResponseEntity
+                .status(BAD_REQUEST)
+                .body(
+                        ExceptionResponse.builder()
+                                .error(exp.getMessage())
                                 .build()
                 );
     }
