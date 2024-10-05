@@ -1,6 +1,7 @@
 package com.houssem.book.book;
 
 
+import com.houssem.book.file.FileUtils;
 import com.houssem.book.history.BookTransactionHistory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,7 @@ public class BookMapper {
                 .shareable(book.isShareable())
                 .owner(book.getOwner().fullName())
                 //cover
+                .cover(FileUtils.readFileFromLocation(book.getBookCover()))
                 .build();
     }
 
