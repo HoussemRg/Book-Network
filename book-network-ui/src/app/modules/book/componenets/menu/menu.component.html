@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary ">
+    <div class="container-fluid">
+        <a href="javascript:void(0)" class="navbar-brand">BSN</a>
+        <button class="navbar-toggler " type="button" data-bs-toggler="collapse" 
+                data-bs-target="#navbarSupportContent" aria-controls="navbarSupportContent"
+                aria-expanded="flase" aria-label="Toggle navbar"
+        >
+            <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+                <a routerLink="/books" class="nav-link" aria-current="page">
+                    <i class="fas fa-home-alt"></i>&nbsp;Home
+                </a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="my-books" class="nav-link " aria-current="page">
+                    <i class="fas fa-book"></i>&nbsp;My Books
+                </a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="my-waiting-list" class="nav-link" aria-current="page">
+                    <i class="fas fa-heart"></i>&nbsp;My Waiting List
+                </a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="my-returned-books" class="nav-link" aria-current="page">
+                    <i class="fas fa-home-alt"></i>&nbsp;My Returned Books
+                </a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="my-borrowed-books" class="nav-link" aria-current="page">
+                    <i class="fas fa-home-alt"></i>&nbsp;Borrowed Books
+                </a>
+            </li>
+        </ul>
+        <form role="search" class="d-flex g-2 align-items-center">
+            <input type="text" name="" id="" class="form-control" placeholder="Find a book" arial-label="Search">
+            <button type="submit" class="btn btn-outline-success"><i class="fas fa-search"></i></button>
+            <span>Welcome</span>&nbsp;
+            <span class="text-capitalize fw-bold">Houssem</span>
+            <button class="btn btn-link" type="button" (click)="logout()"><i class="fas fa-door-open"></i></button>
+        </form>
+    </div>
+    </div>
+</nav>
