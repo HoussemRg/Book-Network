@@ -10,7 +10,8 @@ import { RouterModule, RouterOutlet } from '@angular/router';
   declarations: [],
   imports: [
     CommonModule,
-    BookRoutingModule,    
+    BookRoutingModule,
+    RouterModule    
   ]
 })
 export class BookModule { }

@@ -16,7 +16,8 @@ const routes: Routes = [
       {
         path:'my-books',
         component:MyBooksComponent
-      }
+      },
+      {path:'my-waiting-list',component:MyBooksComponent}
     ]
   },
   

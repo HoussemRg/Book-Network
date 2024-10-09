@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss'
 })
 export class MenuComponent implements OnInit{
 
   ngOnInit(): void {
-    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+    /*if (typeof window !== 'undefined' && typeof document !== 'undefined') {
       const linkColor = document.querySelectorAll('.nav-link');
       linkColor.forEach((link :Element)=> {
         if (window.location.href.endsWith(link.getAttribute('routerLink') || '')) {
@@ -21,7 +22,7 @@ export class MenuComponent implements OnInit{
           link.classList.add('active');
         });
       });
-    }
+    }*/
   }
 
   logout():void{
