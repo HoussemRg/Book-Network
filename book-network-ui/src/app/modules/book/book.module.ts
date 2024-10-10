@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { BookRoutingModule } from './book-routing.module';
 import { RouterModule, RouterOutlet } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -11,7 +12,8 @@ import { RouterModule, RouterOutlet } from '@angular/router';
   imports: [
     CommonModule,
     BookRoutingModule,
-    RouterModule    
+    RouterModule,
+    FormsModule    
   ]
 })
 export class BookModule { }

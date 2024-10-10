@@ -27,7 +27,14 @@ export class BookCardComponent {
 
   public get bookCover(): string | undefined {
     if (this._book.cover) {
-      return 'data:image/jpg;base64' + this._book.cover;
+      const isJpeg = this._book.cover[0].startsWith('/9j/');
+  
+      const mimeType = isJpeg ? 'image/jpeg' : 'image/png'; 
+
+      return `data:${mimeType};base64,${this._book.cover}`;
+      //return 'data:image/jpg;base64,' + this._book.cover
+    
+
     }
     return 'https://picsum.photos/1900/800';
   }
