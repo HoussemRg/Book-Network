@@ -23,7 +23,7 @@ export class BookListComponent implements OnInit {
 
   constructor(
     private booksService:BookService,
-    router:Router
+    private router:Router
   ){}
 
   ngOnInit(): void {

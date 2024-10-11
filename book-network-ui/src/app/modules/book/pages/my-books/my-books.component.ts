@@ -25,7 +25,7 @@ export class MyBooksComponent implements OnInit{
 
   constructor(
     private booksService:BookService,
-    router:Router
+    private router:Router
   ){}
 
   ngOnInit(): void {
@@ -73,13 +73,25 @@ export class MyBooksComponent implements OnInit{
   }
 
   shareBook(book: BookResponse) {
-    throw new Error('Method not implemented.');
+    this.booksService.updateShareableStatus({
+      'book-id':book.id as number
+    }).subscribe({
+      next:():void=>{
+        book.shareable=!book.shareable;
+      }
+    })
   }
   onArchiveBook(book: BookResponse) {
-    throw new Error('Method not implemented.');
+    this.booksService.updateArchivedStatus({
+      'book-id':book.id as number
+    }).subscribe({
+      next:():void=>{
+        book.archived=!book.archived;
+      }
+    })
   }
   editBook(book: BookResponse) {
-    throw new Error('Method not implemented.');
+    this.router.navigate([`/books/manage-book/${book.id}`])
   }
 
 

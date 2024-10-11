@@ -5,7 +5,7 @@
 </div>
 <hr>
 <div class="d-flex justify-content-start flex-wrap gap-2">
-    <app-book-card [book]="book" *ngFor="let book of bookResponse.content" (borrow)="borrowBook(book)">{{book.title}}</app-book-card>
+    <app-book-card [book]="book" *ngFor="let book of bookResponse.content" (borrow)="borrowBook(book)"></app-book-card>
 </div>
 
 
